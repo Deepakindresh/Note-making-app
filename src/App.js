@@ -24,9 +24,19 @@ function App() {
   
   ]);
 
+// Uses prop drilling rather than context api since required by the company
+
+  const addNote = (text) => {
+    setNotes([...notes, {
+      text,
+      date: new Date().toLocaleDateString(),
+      id: notes.length + 1
+    }]);
+  }
+
   return (
-    <div className="App">
-      <NoteList/>
+    <div className="Container">
+      <NoteList notes={notes} handleAddNote={addNote}/>
     </div>
   );
 }
