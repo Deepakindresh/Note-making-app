@@ -2,8 +2,13 @@
 import NoteList from './components/NoteList';
 import {useState, useEffect} from 'react';
 import Search from './components/Search';
+import Header from './components/Header';
 
 function App() {
+
+  const [searchText, setSearchText] = useState('');
+
+  const [darkMode, setDarkMode] = useState(false);
 
   const [notes, setNotes] = useState([{
     text: 'Hello Latracal Solutions!!!',
@@ -25,6 +30,18 @@ function App() {
   
   ]);
 
+  // storing the notes in local storage
+  useEffect(() => {
+    localStorage.setItem('react-notes-data', JSON.stringify(notes));
+  }, [notes]);
+
+  useEffect(() => {
+    const storedNotes = JSON.parse(localStorage.getItem('react-notes-data'));
+    if (storedNotes) {
+      setNotes(storedNotes);
+    }
+  }, [])
+
 // Uses prop drilling rather than context api since required by the company
 
   const addNote = (text) => {
@@ -41,8 +58,11 @@ function App() {
 
   return (
     <div className="container">
-      <Search/>
-      <NoteList notes={notes} handleAddNote={addNote} handleDeleteNode = {deleteNote}/>
+      <Header/>
+      <Search handleSearchNote={setSearchText}/>
+      <NoteList notes={notes.filter((note) =>
+						note.text.toLowerCase().includes(searchText)
+					)} handleAddNote={addNote} handleDeleteNode = {deleteNote}/>
     </div>
   );
 }
