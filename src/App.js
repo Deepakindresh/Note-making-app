@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+
+import NoteList from './components/NoteList';
+import {useState, useEffect} from 'react';
 
 function App() {
+
+  const [notes, setNotes] = useState([{
+    text: 'Hello Latracal Solutions!!!',
+    date: '29/07/2022',
+    id: 1
+  },
+  {
+    text: 'Welcome to the note making app',
+    date: '30/07/2022',
+    id: 2
+  },
+
+  {
+    text: 'Hope you have a wonderful day',
+    date: '01/08/2022',
+    id: 3
+  },
+  
+  
+  ]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NoteList/>
     </div>
   );
 }
