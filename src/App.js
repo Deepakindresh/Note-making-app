@@ -1,6 +1,7 @@
 
 import NoteList from './components/NoteList';
 import {useState, useEffect} from 'react';
+import Search from './components/Search';
 
 function App() {
 
@@ -34,9 +35,14 @@ function App() {
     }]);
   }
 
+  const deleteNote = (id) => {
+    setNotes(notes.filter(note => note.id !== id));
+  }
+
   return (
-    <div className="Container">
-      <NoteList notes={notes} handleAddNote={addNote}/>
+    <div className="container">
+      <Search/>
+      <NoteList notes={notes} handleAddNote={addNote} handleDeleteNode = {deleteNote}/>
     </div>
   );
 }

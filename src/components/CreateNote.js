@@ -2,21 +2,28 @@ import React, {useState} from 'react'
 
 function CreateNote({handleAddNote}) {
 
-    const [noteText, setNoteText] = useState('');  
+    const [noteText, setNoteText] = useState('');
+    const characterLimit = 200;
 
     const handleChange = (e) => {
-        setNoteText(e.target.value);
+        if(characterLimit - e.target.value.length >= 0) {
+            setNoteText(e.target.value);
+        }
     }
 
     const handleSaveClick = () => {
-        handleAddNote(noteText);
+        // remove empty notes
+        if(noteText.trim().length > 0){
+            handleAddNote(noteText);
+            setNoteText('');
+        }
     }
 
   return (
     <div className='note new'>
         <textarea rows='8' cols='10' placeholder='Type to add a note...' onChange={handleChange}></textarea>
         <div className='note-footer'>
-            <small>200 Remaining</small>
+            <small>{characterLimit - noteText.length}</small>
             <button className='save' onClick={handleSaveClick}>Save</button>
         </div>
     </div>
