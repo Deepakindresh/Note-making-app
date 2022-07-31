@@ -8,7 +8,28 @@ function App() {
 
   const [searchText, setSearchText] = useState('');
 
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState([
+    {
+			id: 1,
+			text: 'Hiii, Welcome to Deepak\'s Note App',
+			date: '15/04/2021',
+		},
+		{
+			id: 2,
+			text: 'You can add notes by typing on the pink sticky note and saving it...',
+			date: '21/04/2021',
+		},
+		{
+			id: 3,
+			text: 'You can also delete notes by clicking on the delete button...',
+			date: '28/04/2021',
+		},
+		{
+			id: 4,
+			text: 'You could also search for your notes by typing in the search bar...',
+			date: '30/04/2021',
+		},
+  ]);
   
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem('react-notes-data-storage'));

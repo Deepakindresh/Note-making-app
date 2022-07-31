@@ -16,7 +16,7 @@ function CreateNote({handleAddNote}) {
 
   return (
     <div className='note new'>
-        <textarea rows='8' cols='10' placeholder='Type to add a note...' onChange={(e) => {
+        <textarea rows='8' cols='10' placeholder='Type to add a note...' value={noteText} onChange={(e) => {
         if(characterLimit - e.target.value.length >= 0) {
                 setNoteText(e.target.value);           
         }
