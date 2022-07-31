@@ -8,39 +8,22 @@ function App() {
 
   const [searchText, setSearchText] = useState('');
 
-  const [darkMode, setDarkMode] = useState(false);
-
-  const [notes, setNotes] = useState([{
-    text: 'Hello Latracal Solutions!!!',
-    date: '29/07/2022',
-    id: 1
-  },
-  {
-    text: 'Welcome to the note making app',
-    date: '30/07/2022',
-    id: 2
-  },
-
-  {
-    text: 'Hope you have a wonderful day',
-    date: '01/08/2022',
-    id: 3
-  },
+  const [notes, setNotes] = useState([]);
   
-  
-  ]);
-
-  // storing the notes in local storage
   useEffect(() => {
-    localStorage.setItem('react-notes-data', JSON.stringify(notes));
-  }, [notes]);
-
-  useEffect(() => {
-    const storedNotes = JSON.parse(localStorage.getItem('react-notes-data'));
+    const storedNotes = JSON.parse(localStorage.getItem('react-notes-data-storage'));
     if (storedNotes) {
+      console.log("notes loaded from local storage", storedNotes);
       setNotes(storedNotes);
     }
   }, [])
+  // storing the notes in local storage
+  useEffect(() => {
+    if(notes.length > 0) {
+    localStorage.setItem('react-notes-data-storage', JSON.stringify(notes));
+  }
+  }, [notes]);
+
 
 // Uses prop drilling rather than context api since required by the company
 
@@ -53,16 +36,19 @@ function App() {
   }
 
   const deleteNote = (id) => {
-    setNotes(notes.filter(note => note.id !== id));
+    const newNotes = notes.filter((note) => note.id !== id);
+		setNotes(newNotes);
   }
 
   return (
-    <div className="container">
-      <Header/>
-      <Search handleSearchNote={setSearchText}/>
-      <NoteList notes={notes.filter((note) =>
-						note.text.toLowerCase().includes(searchText)
-					)} handleAddNote={addNote} handleDeleteNode = {deleteNote}/>
+    <div>
+      <div className="container">
+        <Header/>
+        <Search handleSearchNote={setSearchText}/>
+        <NoteList notes={notes.filter((note) => 
+              note.text.toLowerCase().includes(searchText.toLowerCase())
+        )} handleAddNote={addNote} handleDeleteNote = {deleteNote}/>
+      </div>
     </div>
   );
 }
